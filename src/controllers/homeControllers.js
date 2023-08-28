@@ -1,6 +1,3 @@
-const connection = require("../config/database");
-const { getAllUser } = require("../services/CRUDservice");
-
 const User = require("../models/user");
 
 const getHomePage = async (req, res) => {
