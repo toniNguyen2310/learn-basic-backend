@@ -16,10 +16,10 @@ app.use(express.urlencoded({ extended: false }));
 //config template engine
 configViewEngine(app);
 //khai báo route
-// app.get("/", (req, res) => {
-//   res.send("ok");
-// });
-app.use("/", webRoutes);
+app.get("/", (req, res) => {
+  res.send("ok");
+});
+// app.use("/", webRoutes);
 const port = process.env.PORT;
 //test connection
 app.listen(port, () => {
