@@ -15,10 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 //config template engine
 configViewEngine(app);
 
-//khai báo route
-app.get("/", (req, res) => {
-  res.send("ok");
-});
 // app.use("/", webRoutes);
 
 //test connection
@@ -32,3 +28,7 @@ app.get("/", (req, res) => {
     console.log("Error connect to DB>> ", error);
   }
 })();
+//khai báo route
+app.get("/", (req, res) => {
+  res.send("ok");
+});
