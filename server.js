@@ -1,8 +1,8 @@
 require("dotenv").config(); //để sử dụng process env
 const express = require("express");
-const configViewEngine = require("./config/viewEngine");
-const webRoutes = require("./routes/web");
-const connection = require("./config/database");
+const configViewEngine = require("./src/config/viewEngine");
+const webRoutes = require("./src/routes/web");
+const connection = require("./src/config/database");
 
 const app = express();
 const port = process.env.PORT || 8888;
