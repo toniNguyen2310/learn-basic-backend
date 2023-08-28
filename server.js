@@ -6,29 +6,32 @@ const connection = require("./src/config/database");
 
 const app = express();
 const port = process.env.PORT || 8888;
-const hostname = process.env.HOST_NAME;
-
+// const hostname = process.env.HOST_NAME;
+connection();
 //config
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 
 //config template engine
 configViewEngine(app);
-
-// app.use("/", webRoutes);
-
-//test connection
-(async () => {
-  try {
-    await connection();
-    app.listen(port, hostname, () => {
-      console.log(`backend zero app listening on port ${port}`);
-    });
-  } catch (error) {
-    console.log("Error connect to DB>> ", error);
-  }
-})();
 //khai báo route
 app.get("/", (req, res) => {
   res.send("ok");
 });
+// app.use("/", webRoutes);
+
+//test connection
+app.listen(port, () => {
+  console.log("Server is running on port " + port);
+});
+
+// (async () => {
+//   try {
+//     await connection();
+//     app.listen(port, hostname, () => {
+//       console.log(`backend zero app listening on port ${port}`);
+//     });
+//   } catch (error) {
+//     console.log("Error connect to DB>> ", error);
+//   }
+// })();
