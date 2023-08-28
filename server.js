@@ -1,6 +1,6 @@
 require("dotenv").config(); //để sử dụng process env
 const express = require("express");
-const configViewEngine = require("./src/config/viewEngine");
+// const configViewEngine = require("./src/config/viewEngine");
 // const webRoutes = require("./src/routes/web");
 const connection = require("./src/config/database");
 
