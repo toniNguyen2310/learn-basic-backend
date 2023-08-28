@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 const hostname = process.env.HOST_NAME;
-connection();
+// connection();
 //config
 
 app.use(express.urlencoded({ extended: false }));
@@ -22,17 +22,17 @@ app.get("/", (req, res) => {
 // app.use("/", webRoutes);
 const port = process.env.PORT;
 //test connection
-app.listen(port, () => {
-  console.log("Server is running on port " + port);
-});
+// app.listen(port, () => {
+//   console.log("Server is running on port " + port);
+// });
 
-// (async () => {
-//   try {
-//     await connection();
-//     app.listen(port, hostname, () => {
-//       console.log(`backend zero app listening on port ${port}`);
-//     });
-//   } catch (error) {
-//     console.log("Error connect to DB>> ", error);
-//   }
-// })();
+(async () => {
+  try {
+    await connection();
+    app.listen(port, hostname, () => {
+      console.log(`backend zero app listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log("Error connect to DB>> ", error);
+  }
+})();
