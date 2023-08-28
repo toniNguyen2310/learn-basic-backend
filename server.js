@@ -6,7 +6,7 @@ const connection = require("./src/config/database");
 
 const app = express();
 app.use(express.json());
-const port = process.env.PORT || 8888;
+
 // const hostname = process.env.HOST_NAME;
 connection();
 //config
@@ -14,13 +14,13 @@ connection();
 // app.use(express.urlencoded({ extended: false }));
 
 //config template engine
-configViewEngine(app);
+// configViewEngine(app);
 //khai báo route
 app.get("/", (req, res) => {
   res.send("ok");
 });
 // app.use("/", webRoutes);
-
+const port = process.env.PORT;
 //test connection
 app.listen(port, () => {
   console.log("Server is running on port " + port);
