@@ -1,7 +1,7 @@
 require("dotenv").config(); //để sử dụng process env
 const express = require("express");
 const configViewEngine = require("./src/config/viewEngine");
-const webRoutes = require("./src/routes/web");
+// const webRoutes = require("./src/routes/web");
 const connection = require("./src/config/database");
 
 const app = express();
@@ -16,7 +16,10 @@ app.use(express.urlencoded({ extended: false }));
 configViewEngine(app);
 
 //khai báo route
-app.use("/", webRoutes);
+app.get("/", (req, res) => {
+  res.send("ok");
+});
+// app.use("/", webRoutes);
 
 //test connection
 (async () => {
