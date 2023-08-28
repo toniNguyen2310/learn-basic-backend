@@ -5,11 +5,12 @@ const configViewEngine = require("./src/config/viewEngine");
 const connection = require("./src/config/database");
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 8888;
 // const hostname = process.env.HOST_NAME;
 connection();
 //config
-app.use(express.json());
+
 // app.use(express.urlencoded({ extended: false }));
 
 //config template engine
