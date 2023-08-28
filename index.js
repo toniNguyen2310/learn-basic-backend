@@ -3,6 +3,7 @@ const express = require("express");
 const configViewEngine = require("./src/config/viewEngine");
 const webRoutes = require("./src/routes/web");
 const connection = require("./src/config/database");
+const { getHomePage } = require("./src/controllers/homeControllers");
 
 const app = express();
 app.use(express.json());
@@ -16,9 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 //config template engine
 configViewEngine(app);
 //khai báo route
-app.get("/", (req, res) => {
-  res.send("ok");
-});
+app.get("/", getHomePage);
 // app.use("/", webRoutes);
 const port = process.env.PORT;
 //test connection
