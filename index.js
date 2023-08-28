@@ -1,139 +1,38 @@
+require("dotenv").config(); //để sử dụng process env
 const express = require("express");
+// const configViewEngine = require("./src/config/viewEngine");
+// const webRoutes = require("./src/routes/web");
+const connection = require("./src/config/database");
 
 const app = express();
-
-require("dotenv").config();
-
 app.use(express.json());
 
-const connectDB = require("./connectMongo");
+// const hostname = process.env.HOST_NAME;
+connection();
+//config
 
-connectDB();
+// app.use(express.urlencoded({ extended: false }));
 
-const BookModel = require("./Model/bookModel");
-
+//config template engine
+// configViewEngine(app);
+//khai báo route
 app.get("/", (req, res) => {
   res.send("ok");
 });
-
-app.get("/api/v1/books", async (req, res) => {
-  const { limit = 5, orderBy = "name", sortBy = "asc", keyword } = req.query;
-  let page = +req.query?.page;
-
-  if (!page || page <= 0) page = 1;
-
-  const skip = (page - 1) * +limit;
-
-  const query = {};
-
-  if (keyword) query.name = { $regex: keyword, $options: "i" };
-
-  try {
-    const data = await BookModel.find(query)
-      .skip(skip)
-      .limit(limit)
-      .sort({ [orderBy]: sortBy });
-    const totalItems = await BookModel.countDocuments(query);
-    return res.status(200).json({
-      msg: "Ok",
-      data,
-      totalItems,
-      totalPages: Math.ceil(totalItems / limit),
-      limit: +limit,
-      currentPage: page,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      msg: error.message,
-    });
-  }
+// app.use("/", webRoutes);
+const port = process.env.PORT;
+//test connection
+app.listen(port, () => {
+  console.log("Server is running on port " + port);
 });
 
-app.get("/api/v1/books/:id", async (req, res) => {
-  try {
-    const data = await BookModel.findById(req.params.id);
-
-    if (data) {
-      return res.status(200).json({
-        msg: "Ok",
-        data,
-      });
-    }
-
-    return res.status(404).json({
-      msg: "Not Found",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      msg: error.message,
-    });
-  }
-});
-
-app.post("/api/v1/books", async (req, res) => {
-  try {
-    const { name, author, price, description } = req.body;
-    const book = new BookModel({
-      name,
-      author,
-      price,
-      description,
-    });
-    const data = await book.save();
-    return res.status(200).json({
-      msg: "Ok",
-      // data,
-      results: data,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      msg: error.message,
-    });
-  }
-});
-
-app.put("/api/v1/books/:id", async (req, res) => {
-  try {
-    const { name, author, price, description } = req.body;
-    const { id } = req.params;
-
-    const data = await BookModel.findByIdAndUpdate(
-      id,
-      {
-        name,
-        author,
-        price,
-        description,
-      },
-      { new: true }
-    );
-
-    return res.status(200).json({
-      msg: "Ok",
-      data,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      msg: error.message,
-    });
-  }
-});
-
-app.delete("/api/v1/books/:id", async (req, res) => {
-  try {
-    await BookModel.findByIdAndDelete(req.params.id);
-    return res.status(200).json({
-      msg: "Ok",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      msg: error.message,
-    });
-  }
-});
-
-const PORT = process.env.PORT;
-
-app.listen(PORT, () => {
-  console.log("Server is running on port " + PORT);
-});
+// (async () => {
+//   try {
+//     await connection();
+//     app.listen(port, hostname, () => {
+//       console.log(`backend zero app listening on port ${port}`);
+//     });
+//   } catch (error) {
+//     console.log("Error connect to DB>> ", error);
+//   }
+// })();
