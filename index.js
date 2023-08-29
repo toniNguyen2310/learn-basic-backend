@@ -9,7 +9,7 @@ const connection = require("./src/config/database");
 const app = express();
 
 const hostname = process.env.HOST_NAME;
-// connection();
+
 //config
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,10 +19,6 @@ configViewEngine(app);
 //khai báo route
 
 const port = process.env.PORT;
-//test connection
-// app.listen(port, () => {
-//   console.log("Server is running on port " + port);
-// });
 
 (async () => {
   try {
@@ -35,7 +31,7 @@ const port = process.env.PORT;
   }
 })();
 
-// app.use("/v1/api", webRoutes);
+app.use("/v1/api", webRoutes);
 app.use("/v1/api", apiRoutes);
 app.get("/", (req, res) => {
   res.send("ok");
