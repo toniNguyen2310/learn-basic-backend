@@ -17,9 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 //config template engine
 configViewEngine(app);
 //khai báo route
-// app.get("/", (req, res) => {
-//   res.send("ok");
-// });
 
 const port = process.env.PORT;
 //test connection
@@ -40,3 +37,6 @@ const port = process.env.PORT;
 
 // app.use("/v1/api", webRoutes);
 app.use("/v1/api", apiRoutes);
+app.get("/", (req, res) => {
+  res.send("ok");
+});
