@@ -31,7 +31,7 @@ const port = process.env.PORT;
   }
 })();
 
-app.use("/v1/api", webRoutes);
+app.use("/v1/web", webRoutes);
 app.use("/v1/api", apiRoutes);
 app.get("/", (req, res) => {
   res.send("ok");
